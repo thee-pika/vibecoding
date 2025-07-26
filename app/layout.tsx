@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -13,18 +15,23 @@ export const metadata: Metadata = {
   description: "Code Editor",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  console.log("session", session);
   return (
-    <html lang="en">
-      <body
-        className={`${poppins.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <SessionProvider session={session}>
+
+      <html lang="en">
+        <body
+          className={`${poppins.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
