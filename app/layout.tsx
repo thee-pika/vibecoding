@@ -24,7 +24,6 @@ export default async function RootLayout({
   console.log("session", session);
   return (
     <SessionProvider session={session}>
-
       <html lang="en">
         <body
           className={`${poppins.variable} antialiased`}
