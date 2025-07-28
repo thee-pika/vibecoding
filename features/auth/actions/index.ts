@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
 
 export const getUserById = async (id: string) => {
@@ -31,5 +32,10 @@ export const getUserAccountByUserId = async (userId: string) => {
         console.error(error);
         return null;
     }
+}
+
+export const currentUser = async () => {
+    const user = await auth();
+    return user?.user;
 }
 
